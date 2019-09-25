@@ -22,5 +22,12 @@
             "request": "launch",
             "mainClass": "ScannerTest"
         }
+        {
+            "type": "java",
+            "name": "Debug (Launch)-EvalParserTest",
+            "request": "launch",
+            "mainClass": "EvalParserTest",
+            "vmArgs": ["-ea"]
+        }
     ]
 }
