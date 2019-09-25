@@ -23,7 +23,6 @@ public class Scanner {
 
     private static void printErrorAndExit() {
         System.err.println("TokenError: Last Token was incorrect.");
-        System.out.println("TokenError: Last Token was incorrect.");
         System.exit(1);
     }
 
@@ -91,28 +90,30 @@ public class Scanner {
     private Token advancePastState2(StringBuilder stream) {
         switch (this.peek) {
             case '+':
-                readChar(stream);
+                this.peek = ' ';
                 return new Token(TokenType.PLUS, "+");
             case '-':
-                readChar(stream);
+                this.peek = ' ';
                 return new Token(TokenType.MINUS, "-");
             case '*':
-                readChar(stream);
+                this.peek = ' ';
                 return new Token(TokenType.MUL, "*");
             case '/':
-                readChar(stream);
+                this.peek = ' ';
                 return new Token(TokenType.DIV, "/");
             case '<':
                 readChar(stream);
-                if (peek == '=')
+                if (peek == '=') {
+                    this.peek = ' ';
                     return new Token(TokenType.LTE, "<=");
-                else
+                } else
                     return new Token(TokenType.LT, "<");
             case '>':
                 readChar(stream);
-                if (peek == '=')
+                if (peek == '=') {
+                    this.peek = ' ';
                     return new Token(TokenType.GTE, ">=");
-                else
+                } else
                     return new Token(TokenType.GT, ">");
             default:
                 printErrorAndExit();
@@ -125,7 +126,6 @@ public class Scanner {
      * @return A Token
      */
     public Token extractToken(StringBuilder stream) {
-        this.peek = ' ';
         advancePastState0(stream);
         Token tok = null;
         if(Character.isDigit(this.peek))
@@ -145,6 +145,7 @@ public class Scanner {
     public String extractTokens(String arg) {
         String result = "";
         StringBuilder stream = new StringBuilder(arg);
+        readChar(stream);
         while (stream.length() != 0) {
             Token nextToken = extractToken(stream);
             result += nextToken.toString();
